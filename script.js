@@ -1,4 +1,4 @@
-const data = [
+const datas = [
     {
         "logo": "./assets/images/logo-devlens.svg",
         "name": "DevLens",
@@ -71,4 +71,61 @@ const data = [
         "description": "Enhanced developer console with advanced filtering and logging.",
         "isActive": true
     }
-  ];
+];
+
+const extentions = document.querySelector('.extentions')
+const btn_group = document.querySelector('.btn-group');
+
+datas.forEach(data => {
+    let extention = document.createElement('div');
+    let div_content = `<div class="extention">
+        <div class="extention-info">
+          <img src="${data.logo}" alt="image">
+          <div class="extention-detail">
+            <h4 class="extention-name">${data.name}</h4>
+            <p>${data.description}</p>
+          </div>
+        </div>
+        <div class="active-remove">
+          <button class="remove">Remove</button>
+          <div class="toggle"><p class="round"></p></div>
+        </div>
+      </div>`;
+    extention.innerHTML = div_content;
+    extention.querySelector('.toggle').addEventListener('click', () => {
+
+    })
+    extentions.appendChild(extention)
+})
+
+const theme = document.querySelector('.theme');
+const moon = theme.querySelector('.img1');
+const sun  = theme.querySelector('.img2')
+theme.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    sun.classList.toggle('sun');
+    moon.classList.toggle('moon');
+
+})
+let all_btn = btn_group.querySelector('.one');
+let active_btn = btn_group.querySelector('.two');
+let inactive_btn = btn_group.querySelector('.three');
+
+all_btn.addEventListener('click', () => {
+    inactive_btn.classList.remove('active');
+    active_btn.classList.remove('active');
+    all_btn.classList.add('active');
+})
+
+active_btn.addEventListener('click', () => {
+    inactive_btn.classList.remove('active');
+    all_btn.classList.remove('active');
+    active_btn.classList.add('active');
+})
+
+inactive_btn.addEventListener('click', () => {
+    all_btn.classList.remove('active');
+    active_btn.classList.remove('active');
+    inactive_btn.classList.add('active');
+})
+

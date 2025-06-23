@@ -30,7 +30,7 @@ The designs were created to the following widths:
 
 ### Gradient
 
-- **Light Gradient**: `linear-gradient(180deg, #EBF2FC 0%, #EEF8F9 100%)`
+- **Light Gradient**: `linear-gradient(180deg, #EBF2FC 0%,rgb(210, 242, 245) 100%)`
 - **Dark Gradient**: `linear-gradient(180deg, #040918 0%, #091540 100%)`
 
 ## Typography
