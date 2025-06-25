@@ -3,13 +3,13 @@ const datas = [
         "logo": "./assets/images/logo-devlens.svg",
         "name": "DevLens",
         "description": "Quickly inspect page layouts and visualize element boundaries.",
-        "isActive": true
+        "isActive": false
     },
     {
         "logo": "./assets/images/logo-style-spy.svg",
         "name": "StyleSpy",
         "description": "Instantly analyze and copy CSS from any webpage element.",
-        "isActive": true
+        "isActive": false
     },
     {
         "logo": "./assets/images/logo-speed-boost.svg",
@@ -21,13 +21,13 @@ const datas = [
         "logo": "./assets/images/logo-json-wizard.svg",
         "name": "JSONWizard",
         "description": "Formats, validates, and prettifies JSON responses in-browser.",
-        "isActive": true
+        "isActive": false
     },
     {
         "logo": "./assets/images/logo-tab-master-pro.svg",
         "name": "TabMaster Pro",
         "description": "Organizes browser tabs into groups and sessions.",
-        "isActive": true
+        "isActive": false
     },
     {
         "logo": "./assets/images/logo-viewport-buddy.svg",
@@ -39,7 +39,7 @@ const datas = [
         "logo": "./assets/images/logo-markup-notes.svg",
         "name": "Markup Notes",
         "description": "Enables annotation and notes directly onto webpages for collaborative debugging.",
-        "isActive": true
+        "isActive": false
     },
     {
         "logo": "./assets/images/logo-grid-guides.svg",
@@ -51,13 +51,13 @@ const datas = [
         "logo": "./assets/images/logo-palette-picker.svg",
         "name": "Palette Picker",
         "description": "Instantly extracts color palettes from any webpage.",
-        "isActive": true
+        "isActive": false
     },
     {
         "logo": "./assets/images/logo-link-checker.svg",
         "name": "LinkChecker",
         "description": "Scans and highlights broken links on any page.",
-        "isActive": true
+        "isActive": false
     },
     {
         "logo": "./assets/images/logo-dom-snapshot.svg",
@@ -69,13 +69,14 @@ const datas = [
         "logo": "./assets/images/logo-console-plus.svg",
         "name": "ConsolePlus",
         "description": "Enhanced developer console with advanced filtering and logging.",
-        "isActive": true
+        "isActive": false
     }
 ];
 
-const extentions = document.querySelector('.extentions')
+const extentions = document.querySelector('.extentions');
 const btn_group = document.querySelector('.btn-group');
-
+const active_extentions = document.querySelector('.active-extentions');
+const inactive_extentions = document.querySelector('.inactive-extentions');
 datas.forEach(data => {
     let extention = document.createElement('div');
     let div_content = `<div class="extention">
@@ -92,15 +93,50 @@ datas.forEach(data => {
         </div>
       </div>`;
     extention.innerHTML = div_content;
-    extention.querySelector('.toggle').addEventListener('click', () => {
-
+    extentions.appendChild(extention);
+    let active_inactive = extention.querySelector('.toggle');
+    active_inactive.addEventListener('click', (e) => {
+        let target = e.target;
+        let round = target.querySelector('.round');
+        active_inactive.classList.toggle('justify-left');
+        active_inactive.classList.toggle('bg-orange');
+        round.classList.toggle('animate-toggle');
+        if (data.isActive == false)
+            data.isActive = true;
+        else
+            data.isActive = false;
     })
-    extentions.appendChild(extention)
 })
+
+
+
+// datas.forEach(data => {
+//         let div_content = `<div class="extention">
+//         <div class="extention-info">
+//           <img src="${data.logo}" alt="image">
+//           <div class="extention-detail">
+//             <h4 class="extention-name">${data.name}</h4>
+//             <p>${data.description}</p>
+//           </div>
+//         </div>
+//         <div class="active-remove">
+//           <button class="remove">Remove</button>
+//           <div class="toggle"><p class="round"></p></div>
+//         </div>
+//       </div>`;
+//         switch (data.isActive) {
+//             case true:
+//                 active_extentions.appendChild(extention);
+//                 break;
+//             case false:
+//                 inactive_extentions.appendChild(extention);
+//                 break;
+//         }
+// })
 
 const theme = document.querySelector('.theme');
 const moon = theme.querySelector('.img1');
-const sun  = theme.querySelector('.img2')
+const sun = theme.querySelector('.img2')
 const dark_logo = document.querySelector('.logo');
 const light_logo = document.querySelector('.white-logo');
 theme.addEventListener('click', () => {
@@ -111,6 +147,7 @@ theme.addEventListener('click', () => {
     dark_logo.classList.toggle('dark')
 
 })
+
 let all_btn = btn_group.querySelector('.one');
 let active_btn = btn_group.querySelector('.two');
 let inactive_btn = btn_group.querySelector('.three');

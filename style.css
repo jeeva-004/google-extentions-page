@@ -137,7 +137,6 @@ header {
     border-radius: 40px;
     border: none;
     cursor: pointer;
-    /* color: var(--ex-bg); */
     box-shadow: 0 0 5px rgb(204, 202, 202);
 }
 
@@ -154,7 +153,7 @@ header {
     width: 100%;
     display: grid;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 15px;
 }
 
@@ -225,6 +224,7 @@ header {
 .toggle {
     width: 60px;
     height: 30px;
+    position: relative;
     display: flex;
     justify-content: start;
     align-items: center;
@@ -238,14 +238,36 @@ header {
 .toggle .round {
     width: 20px;
     height: 20px;
+    position: absolute;
     background-color: var(--light);
     border: none;
     border-radius: 50%;
 }
 
+.justify-left {
+    justify-content: end;
+}
+
+.animate-toggle{
+    animation: slide .3s ease 1;
+}
+
+@keyframes slide {
+    from{
+        left: 0;
+    }
+    to{
+        left: 35px;
+    }
+}
+
+.bg-orange {
+    background-color: var(--button-color);
+}
+
 @media screen and (320px <=width <=425px) {
     .container {
-        width: 90%;
+        width: 95%;
     }
 
     .extention-buttons {
@@ -260,7 +282,7 @@ header {
 
 }
 
-@media screen and (width>=768px) {
+@media screen and (width=768px) {
     .container {
         width: 90%;
     }
