@@ -101,10 +101,14 @@ datas.forEach(data => {
 const theme = document.querySelector('.theme');
 const moon = theme.querySelector('.img1');
 const sun  = theme.querySelector('.img2')
+const dark_logo = document.querySelector('.logo');
+const light_logo = document.querySelector('.white-logo');
 theme.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
     sun.classList.toggle('sun');
     moon.classList.toggle('moon');
+    light_logo.classList.toggle('white-logo');
+    dark_logo.classList.toggle('dark')
 
 })
 let all_btn = btn_group.querySelector('.one');
