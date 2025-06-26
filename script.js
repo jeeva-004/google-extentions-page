@@ -91,8 +91,6 @@ const extentions = document.querySelector('.extentions');
 const btn_group = document.querySelector('.btn-group');
 const active_extentions = document.querySelector('.active-extentions');
 const inactive_extentions = document.querySelector('.inactive-extentions');
-let active_ = [];
-let inactive_ = [];
 datas.forEach(data => {
     let extention = document.createElement('div');
     let div_content = `<div class="extention">
@@ -117,16 +115,20 @@ datas.forEach(data => {
         active_inactive.classList.toggle('justify-left');
         active_inactive.classList.toggle('bg-orange');
         round.classList.toggle('animate-toggle');
+        if (data.isActive == true) {
+            data.isActive = false;
+        }
         if (data.isActive == false) {
             data.isActive = true;
-            // active_extentions.appendChild(extention.cloneNode(true));
         }
-        if (data.isActive == false) {
-            data.isActive = false;
-            // inactive_extentions.appendChild(extention.cloneNode(true));
-        }
-        // active_ = datas.filter(data => data.isActive == true);
-        // inactive_ = datas.filter(data => data.isActive == false);
+
+        let active_div = extentions.querySelectorAll('.extention');
+        active_div.forEach(data => {
+            let round_ = data.querySelector('.toggle');
+            if (round_.classList.contains('bg-orange')) {
+                active_extentions.appendChild(data.cloneNode(true));
+            }
+        })
     })
 })
 
@@ -161,44 +163,3 @@ inactive_btn.addEventListener('click', () => {
     inactive_extentions.style.display = 'grid';
 })
 
-// datas.forEach(data => {
-//     let extention = document.createElement('div');
-//     if (data.isActive == true) {
-//         let div_content = `<div class="extention">
-//         <div class="extention-info">
-//           <img src="${data.logo}" alt="image">
-//           <div class="extention-detail">
-//             <h4 class="extention-name">${data.name}</h4>
-//             <p>${data.description}</p>
-//           </div>
-//         </div>
-//         <div class="active-remove">
-//           <button class="remove">Remove</button>
-//           <div class="toggle"><p class="round"></p></div>
-//         </div>
-//       </div>`;
-//         extention.innerHTML = div_content;
-//         active_extentions.appendChild(extention)
-//     }
-// })
-
-// datas.forEach(data => {
-//     let extention = document.createElement('div');
-//     if (data.isActive == false) {
-//         let div_content = `<div class="extention">
-//         <div class="extention-info">
-//           <img src="${data.logo}" alt="image">
-//           <div class="extention-detail">
-//             <h4 class="extention-name">${data.name}</h4>
-//             <p>${data.description}</p>
-//           </div>
-//         </div>
-//         <div class="active-remove">
-//           <button class="remove">Remove</button>
-//           <div class="toggle"><p class="round"></p></div>
-//         </div>
-//       </div>`;
-//         extention.innerHTML = div_content;
-//         inactive_extentions.appendChild(extention);
-//     }
-// })
