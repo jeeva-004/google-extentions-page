@@ -78,12 +78,13 @@ const moon = theme.querySelector('.img1');
 const sun = theme.querySelector('.img2')
 const dark_logo = document.querySelector('.logo');
 const light_logo = document.querySelector('.white-logo');
+
 theme.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
     sun.classList.toggle('sun');
     moon.classList.toggle('moon');
     light_logo.classList.toggle('white-logo');
-    dark_logo.classList.toggle('dark')
+    dark_logo.classList.toggle('dark');
 
 })
 
@@ -91,6 +92,7 @@ const extentions = document.querySelector('.extentions');
 const btn_group = document.querySelector('.btn-group');
 const active_extentions = document.querySelector('.active-extentions');
 const inactive_extentions = document.querySelector('.inactive-extentions');
+let all_ac_extention = [], all_inac_extention = [];
 datas.forEach(data => {
     let extention = document.createElement('div');
     let div_content = `<div class="extention">
@@ -112,24 +114,61 @@ datas.forEach(data => {
     active_inactive.addEventListener('click', (e) => {
         let target = e.target;
         let round = target.querySelector('.round');
-        active_inactive.classList.toggle('justify-left');
-        active_inactive.classList.toggle('bg-orange');
-        round.classList.toggle('animate-toggle');
-        if (data.isActive == true) {
-            data.isActive = false;
-        }
-        if (data.isActive == false) {
+        if (!active_inactive.classList.contains('bg-orange') && !active_inactive.classList.contains('justify-left')) {
+            active_inactive.classList.add('bg-orange');
+            active_inactive.classList.add('justify-left');
+            round.classList.add('animate-right');
             data.isActive = true;
         }
+        else {
+            active_inactive.classList.remove('bg-orange');
+            active_inactive.classList.remove('justify-left');
+            round.classList.add('animate-left');
+            data.isActive = false;
+        }
+        all_ac_extention = datas.filter(data => data.isActive == true);
 
-        let active_div = extentions.querySelectorAll('.extention');
-        active_div.forEach(data => {
-            let round_ = data.querySelector('.toggle');
-            if (round_.classList.contains('bg-orange')) {
-                active_extentions.appendChild(data.cloneNode(true));
-            }
-        })
+        all_inac_extention = datas.filter(data => data.isActive == false)
+
     })
+})
+
+all_ac_extention.forEach(data => {
+    let extention = document.createElement('div');
+    let div_content = `<div class="extention">
+        <div class="extention-info">
+          <img src="${data.logo}" alt="image">
+          <div class="extention-detail">
+            <h4 class="extention-name">${data.name}</h4>
+            <p>${data.description}</p>
+          </div>
+        </div>
+        <div class="active-remove">
+          <button class="remove">Remove</button>
+          <div class="toggle"><p class="round"></p></div>
+        </div>
+      </div>`;
+    extention.innerHTML = div_content;
+    active_extentions.appendChild(extention);
+})
+
+all_inac_extention.forEach(data => {
+    let extention = document.createElement('div');
+    let div_content = `<div class="extention">
+        <div class="extention-info">
+          <img src="${data.logo}" alt="image">
+          <div class="extention-detail">
+            <h4 class="extention-name">${data.name}</h4>
+            <p>${data.description}</p>
+          </div>
+        </div>
+        <div class="active-remove">
+          <button class="remove">Remove</button>
+          <div class="toggle"><p class="round"></p></div>
+        </div>
+      </div>`;
+    extention.innerHTML = div_content;
+    inactive_extentions.appendChild(extention);
 })
 
 let all_btn = btn_group.querySelector('.one');
