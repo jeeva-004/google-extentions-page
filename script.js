@@ -75,7 +75,7 @@ const datas = [
 
 const theme = document.querySelector('.theme');
 const moon = theme.querySelector('.img1');
-const sun = theme.querySelector('.img2')
+const sun = theme.querySelector('.img2');
 const dark_logo = document.querySelector('.logo');
 const light_logo = document.querySelector('.white-logo');
 
@@ -85,120 +85,97 @@ theme.addEventListener('click', () => {
     moon.classList.toggle('moon');
     light_logo.classList.toggle('white-logo');
     dark_logo.classList.toggle('dark');
-
-})
+});
 
 const extentions = document.querySelector('.extentions');
 const btn_group = document.querySelector('.btn-group');
 const active_extentions = document.querySelector('.active-extentions');
 const inactive_extentions = document.querySelector('.inactive-extentions');
-let all_ac_extention = [], all_inac_extention = [];
-datas.forEach(data => {
-    let extention = document.createElement('div');
-    let div_content = `<div class="extention">
-        <div class="extention-info">
-          <img src="${data.logo}" alt="image">
-          <div class="extention-detail">
-            <h4 class="extention-name">${data.name}</h4>
-            <p>${data.description}</p>
-          </div>
-        </div>
-        <div class="active-remove">
-          <button class="remove">Remove</button>
-          <div class="toggle"><p class="round"></p></div>
-        </div>
-      </div>`;
-    extention.innerHTML = div_content;
-    extentions.appendChild(extention);
-    let active_inactive = extention.querySelector('.toggle');
-    active_inactive.addEventListener('click', (e) => {
-        let target = e.target;
-        let round = target.querySelector('.round');
-        if (!active_inactive.classList.contains('bg-orange') && !active_inactive.classList.contains('justify-left')) {
-            active_inactive.classList.add('bg-orange');
-            active_inactive.classList.add('justify-left');
-            round.classList.add('animate-right');
-            data.isActive = true;
+
+
+function createExtensionElement(data) {
+    const ext = document.createElement('div');
+    ext.innerHTML = `
+        <div class="extention">
+            <div class="extention-info">
+                <img src="${data.logo}" alt="image">
+                <div class="extention-detail">
+                    <h4 class="extention-name">${data.name}</h4>
+                    <p>${data.description}</p>
+                </div>
+            </div>
+            <div class="active-remove">
+                <button class="remove">Remove</button>
+                <div class="toggle"><p class="round ${data.isActive ? 'animate-right' : 'animate-left'}"></p></div>
+            </div>
+        </div>`;
+    
+    const toggle = ext.querySelector('.toggle');
+    const round = toggle.querySelector('.round');
+    
+    if (data.isActive) {
+        toggle.classList.add('bg-orange', 'justify-left');
+    }
+
+    toggle.addEventListener('click', () => {
+        toggle.classList.toggle('bg-orange');
+        toggle.classList.toggle('justify-left');
+        round.classList.toggle('animate-right');
+        round.classList.toggle('animate-left');
+
+        data.isActive = !data.isActive;
+
+        renderExtensions();
+    });
+
+    return ext;
+}
+
+function renderExtensions() {
+    extentions.innerHTML = '';
+    active_extentions.innerHTML = '';
+    inactive_extentions.innerHTML = '';
+
+    datas.forEach(data => {
+        const ext = createExtensionElement(data);
+        extentions.appendChild(ext);
+        if (data.isActive) {
+            active_extentions.appendChild(ext.cloneNode(true));
+        } else {
+            inactive_extentions.appendChild(ext.cloneNode(true));
         }
-        else {
-            active_inactive.classList.remove('bg-orange');
-            active_inactive.classList.remove('justify-left');
-            round.classList.add('animate-left');
-            data.isActive = false;
-        }
-        all_ac_extention = datas.filter(data => data.isActive == true);
+    });
+}
 
-        all_inac_extention = datas.filter(data => data.isActive == false)
-
-    })
-})
-
-all_ac_extention.forEach(data => {
-    let extention = document.createElement('div');
-    let div_content = `<div class="extention">
-        <div class="extention-info">
-          <img src="${data.logo}" alt="image">
-          <div class="extention-detail">
-            <h4 class="extention-name">${data.name}</h4>
-            <p>${data.description}</p>
-          </div>
-        </div>
-        <div class="active-remove">
-          <button class="remove">Remove</button>
-          <div class="toggle"><p class="round"></p></div>
-        </div>
-      </div>`;
-    extention.innerHTML = div_content;
-    active_extentions.appendChild(extention);
-})
-
-all_inac_extention.forEach(data => {
-    let extention = document.createElement('div');
-    let div_content = `<div class="extention">
-        <div class="extention-info">
-          <img src="${data.logo}" alt="image">
-          <div class="extention-detail">
-            <h4 class="extention-name">${data.name}</h4>
-            <p>${data.description}</p>
-          </div>
-        </div>
-        <div class="active-remove">
-          <button class="remove">Remove</button>
-          <div class="toggle"><p class="round"></p></div>
-        </div>
-      </div>`;
-    extention.innerHTML = div_content;
-    inactive_extentions.appendChild(extention);
-})
-
-let all_btn = btn_group.querySelector('.one');
-let active_btn = btn_group.querySelector('.two');
-let inactive_btn = btn_group.querySelector('.three');
+const all_btn = btn_group.querySelector('.one');
+const active_btn = btn_group.querySelector('.two');
+const inactive_btn = btn_group.querySelector('.three');
 
 all_btn.addEventListener('click', () => {
-    inactive_btn.classList.remove('active');
-    active_btn.classList.remove('active');
     all_btn.classList.add('active');
+    active_btn.classList.remove('active');
+    inactive_btn.classList.remove('active');
     extentions.style.display = 'grid';
     active_extentions.style.display = 'none';
     inactive_extentions.style.display = 'none';
-})
+});
 
 active_btn.addEventListener('click', () => {
-    inactive_btn.classList.remove('active');
-    all_btn.classList.remove('active');
     active_btn.classList.add('active');
+    all_btn.classList.remove('active');
+    inactive_btn.classList.remove('active');
     extentions.style.display = 'none';
     active_extentions.style.display = 'grid';
     inactive_extentions.style.display = 'none';
-})
+});
 
 inactive_btn.addEventListener('click', () => {
+    inactive_btn.classList.add('active');
     all_btn.classList.remove('active');
     active_btn.classList.remove('active');
-    inactive_btn.classList.add('active');
     extentions.style.display = 'none';
     active_extentions.style.display = 'none';
     inactive_extentions.style.display = 'grid';
-})
+});
 
+renderExtensions();
